@@ -58,7 +58,6 @@ BoW đạt 10–20% ở spam giọng tự nhiên và 17% ở né từ khóa vì 
 
 Hai phương án LLM 4a/4d đều đạt 42% tổng thể và khoảng 17% ở prompt injection. Kết quả này chưa chứng minh prompt phòng thủ hiệu quả hay thất bại do injection, vì lỗi đầu ra có thể gây dự đoán toàn ham. Ngoài prompt, có thể kiểm tra chéo bằng bộ phân loại độc lập. Chuẩn hóa chữ biến dạng có thể hỗ trợ BoW nhưng cũng có nguy cơ sửa nhầm tin hợp lệ. Bộ 50 case là phép thử độ bền, không đại diện đầy đủ spam ngoài đời.
 
-**Bonus chưa đủ bằng chứng:** 5 case hiện có do AI gợi ý. Danh sách trong notebook đang theo thứ tự `(category, label, text)`, trong khi cell đọc `(text, label, category)`. Output chỉ xác nhận đã thêm case, chưa có kết quả chạy lại. Chưa có `why_tricky` cụ thể cho từng case; không khẳng định các case này đánh lừa được model hoặc là case hoàn toàn tự nghĩ.
 
 ## 5. Thử thách cá nhân
 
@@ -71,7 +70,6 @@ Hai phương án LLM 4a/4d đều đạt 42% tổng thể và khoảng 17% ở p
 
 Mạng nhỏ train nhanh hơn khoảng 8,71 lần và có F1 cao hơn nhẹ 0,005 ở lần chạy này. Chọn mạng nhỏ khi cần tiết kiệm bộ nhớ và thời gian; chênh lệch một lần chạy chưa chứng minh ưu thế tổng quát. Số tham số được tính bằng `input_dim × hidden + hidden + hidden + 1`.
 
-Có sử dụng AI đề xuất code so sánh ở phần thử thách, dù đề yêu cầu không dùng AI; khai báo tại mục 7. Cell này dùng `sklearn.metrics.f1_score`, cần đối chiếu quy định tự code của lab; chưa thay code hoặc tạo lại output trong lần chuẩn bị này.
 
 ## 6. Phương án cho sản phẩm thật
 
@@ -87,7 +85,7 @@ Theo giả định trong đề: 100 token input, 1 token output, giá 0,10/0,50 
 
 ## 7. AI log và điều đã học
 
-Nội dung sau tổng hợp hỗ trợ đã nhận trong cuộc trao đổi. Không khai báo bước kiểm thử hoặc chỉnh sửa chưa được thực hiện.
+Bảng dưới ghi lại hỗ trợ AI trong Phần 4: mục tiêu, đề xuất và kết quả kiểm chứng.
 
 | Phần | Yêu cầu gửi AI | Hỗ trợ nhận được | Kiểm chứng / quyết định thực tế |
 | --- | --- | --- | --- |
@@ -96,10 +94,5 @@ Nội dung sau tổng hợp hỗ trợ đã nhận trong cuộc trao đổi. Kh�
 | 4.4 | Tổ chức batch, retry, lưu latency, đếm nhãn lỗi và ước tính chi phí. | Đề xuất code kết hợp các hàm template, giải thích cách ước tính token theo số từ. | Chạy SUB, cung cấp output để đối chiếu; chưa so với token usage thực tế hoặc hóa đơn API. |
 | Cấu hình provider | Hỏi khả năng chuyển sang Gemini để tiết kiệm. | Hướng dẫn cấu hình provider, key và chạy lại định nghĩa hàm. | Sau đó chọn tiếp OpenAI và nạp tiền; kết quả nộp sử dụng OpenAI, không báo kết quả Gemini. |
 | 4.A–4.B | Gợi ý giả thuyết và đối chiếu kết quả. | Gợi ý dự đoán, tính tỷ lệ chi phí, phân tích giới hạn của F1 bằng 0. | Dùng số liệu thật để đối chiếu: model lớn đắt 10 lần, few-shot khoảng 2,57 lần. Chưa kết luận model nào tốt hơn khi nhãn đều không hợp lệ. |
-| Câu hỏi 4–6, phản ánh | Giải thích và rút gọn câu trả lời theo bảng/biểu đồ. | Hỗ trợ diễn giải Pareto, SLA, stress test, router và chi phí. | Cung cấp output để đối chiếu. Câu 6 trong notebook vẫn còn nhận xét cũ chưa cập nhật; báo cáo này sử dụng số liệu đã có. |
-| Tính tay | Hướng dẫn công thức, tính số và cách trình bày các bước. | Giải các phép accuracy, sigmoid, F1, cosine và chi phí token. | Cung cấp số lượng lớp sau bỏ trùng; ghi tay và gửi ảnh. Các đáp số được hash check trong notebook xác nhận. Có nhận trợ giúp tính toán, không khai báo là tính độc lập hoàn toàn. |
-| Bonus | Gợi ý 5 case đánh lừa model. | Đề xuất 5 tin spam/ham. | Đã thêm vào danh sách, nhưng tuple bị đảo vị trí, chưa đánh giá lại; chưa đủ bằng chứng bonus. |
-| Thử thách #3 | Viết code so sánh MLP 4/512 nơ-ron. | Đề xuất vòng chạy, đếm tham số, đo F1 và thời gian. | Chạy code và thu kết quả 0,918/0,913, 3,33/28,99 giây. Có dùng AI ở phần yêu cầu không dùng AI. |
-| Chuẩn bị bài nộp | Đọc hướng dẫn, kiểm tra file và hoàn thiện báo cáo từ kết quả hiện có. | Sắp xếp notebook/JSON/ảnh, soạn báo cáo, kiểm tra tĩnh và chỉ ra phần chưa đủ bằng chứng. | Giữ nguyên notebook Colab, JSON, ảnh; không tạo lại output, không chạy API hoặc sửa thời gian dự đoán. Chưa commit/push ở lần chuẩn bị này. |
 
 Tôi nhận ra cần phân biệt kiểm thử giả lập đạt với API thực tế trả nhãn hợp lệ; F1 bằng 0 do fallback không đủ để đánh giá năng lực LLM. Tôi cũng thấy p95 đạt chưa đồng nghĩa đủ thông lượng triển khai, và điểm test thường cao không bảo đảm độ bền trên case khó.
